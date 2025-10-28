@@ -4,11 +4,18 @@ import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from utils.utils import get_env_var
+from utils.knowledge_db_setup import KnowledgeDBSetup
 
 @st.cache_data
 def load_sql_template():
     """Load the SQL template file and cache it"""
     with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "utils", "site_pages.sql"), "r") as f:
+        return f.read()
+
+@st.cache_data
+def load_knowledge_sql_template():
+    """Load the knowledge management SQL template file and cache it"""
+    with open(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "utils", "knowledge_schema.sql"), "r") as f:
         return f.read()
 
 def get_supabase_sql_editor_url(supabase_url):
@@ -177,4 +184,146 @@ def database_tab(supabase):
                         supabase_url = get_env_var("SUPABASE_URL")
                         if supabase_url:
                             dashboard_url = get_supabase_sql_editor_url(supabase_url)
-                            st.markdown(f"[Open Your Supabase SQL Editor with this URL]({dashboard_url})")    
+                            st.markdown(f"[Open Your Supabase SQL Editor with this URL]({dashboard_url})")
+
+    # Knowledge Management Schema Setup
+    st.divider()
+    st.subheader("📚 Knowledge Management Schema")
+    st.write("Enhanced schema for project management, task tracking, and knowledge attachment.")
+
+    with st.expander("About the Knowledge Management Schema", expanded=False):
+        st.markdown("""
+        This enhanced schema adds powerful features to Archon:
+
+        **New Tables:**
+        - `knowledge_sources` - Track external documentation sources
+        - `projects` - Manage projects with knowledge context
+        - `tasks` - Tasks with attached knowledge and agent assignment
+        - `task_knowledge_links` - Link relevant knowledge to tasks
+        - `task_dependencies` - Define task dependencies for scheduling
+        - `knowledge_relationships` - Build knowledge graphs
+        - `agent_schedules` - Track agent execution schedules
+
+        **Enhanced site_pages:**
+        - `tags` - Tag knowledge chunks (e.g., ['fastapi', 'authentication'])
+        - `knowledge_type` - Classify knowledge (documentation, tutorial, etc.)
+        - `framework` - Framework/library name (e.g., 'fastapi', 'react')
+        - `language` - Programming language
+
+        **Key Features:**
+        - Attach relevant documentation to tasks automatically
+        - Track which knowledge agents need for tasks
+        - Schedule tasks based on dependencies
+        - Build knowledge graphs showing relationships
+        - Learn from task completions
+
+        This schema enables Archon to use knowledge-aware project management!
+        """)
+
+    # Check knowledge schema status
+    try:
+        setup = KnowledgeDBSetup()
+        status = setup.get_schema_status()
+
+        # Display status
+        if status['overall_status'] == 'complete':
+            st.success("✅ Knowledge Management schema is fully set up!")
+
+            # Show table details
+            with st.expander("View Schema Details", expanded=False):
+                col1, col2 = st.columns(2)
+
+                with col1:
+                    st.write("**Core Tables:**")
+                    for table in ['knowledge_sources', 'projects', 'tasks', 'task_dependencies']:
+                        st.write(f"✓ {table}")
+
+                with col2:
+                    st.write("**Relationship Tables:**")
+                    for table in ['task_knowledge_links', 'knowledge_relationships', 'agent_schedules']:
+                        st.write(f"✓ {table}")
+
+                st.write("**Enhanced Columns in site_pages:**")
+                if 'site_pages' in status['enhanced_columns']:
+                    for col, exists in status['enhanced_columns']['site_pages'].items():
+                        st.write(f"{'✓' if exists else '✗'} {col}")
+
+            # Test functions
+            if st.button("Test Knowledge Functions"):
+                with st.spinner("Testing RPC functions..."):
+                    test_results = setup.test_knowledge_functions()
+
+                    for func_name, result in test_results.items():
+                        if result == 'working':
+                            st.success(f"✓ {func_name} is working")
+                        else:
+                            st.error(f"✗ {func_name}: {result}")
+
+            # Create sample data
+            if st.button("Create Sample Project & Tasks"):
+                with st.spinner("Creating sample data..."):
+                    try:
+                        setup.create_sample_data()
+                        st.success("✅ Sample data created! Check the Projects tab to see it.")
+                    except Exception as e:
+                        st.error(f"Error creating sample data: {e}")
+
+        elif status['overall_status'] == 'partial':
+            st.warning("⚠️ Knowledge Management schema is partially set up.")
+
+            # Show what's missing
+            missing_tables = [t for t, exists in status['tables'].items() if not exists]
+            if missing_tables:
+                st.write("**Missing tables:**")
+                for table in missing_tables:
+                    st.write(f"- {table}")
+
+            # Show missing columns
+            for table, columns in status['enhanced_columns'].items():
+                missing_cols = [c for c, exists in columns.items() if not exists]
+                if missing_cols:
+                    st.write(f"**Missing columns in {table}:**")
+                    for col in missing_cols:
+                        st.write(f"- {col}")
+
+            st.info("Execute the SQL below to complete the setup.")
+
+        else:
+            st.info("Knowledge Management schema not yet set up.")
+
+        # Show setup instructions button
+        if status['overall_status'] != 'complete':
+            if st.button("Get Setup Instructions for Knowledge Management"):
+                # Load the knowledge SQL
+                knowledge_sql = load_knowledge_sql_template()
+
+                st.info("### Knowledge Management Schema Setup Instructions")
+
+                supabase_url = get_env_var("SUPABASE_URL")
+                if supabase_url:
+                    dashboard_url = get_supabase_sql_editor_url(supabase_url)
+                    st.markdown(f"**Step 1:** [Open Your Supabase SQL Editor]({dashboard_url})")
+                else:
+                    st.markdown("**Step 1:** Open your Supabase Dashboard → SQL Editor")
+
+                st.markdown("**Step 2:** Create a new SQL query")
+                st.markdown("**Step 3:** Copy and execute the SQL below:")
+
+                with st.expander("📋 Click to view SQL (copy all of it)", expanded=True):
+                    st.code(knowledge_sql, language="sql")
+
+                st.success("**Step 4:** After executing, return here and click 'Verify Setup'")
+
+        # Verify setup button
+        if status['overall_status'] != 'complete':
+            if st.button("Verify Setup"):
+                st.cache_data.clear()  # Clear cache to re-check
+                st.rerun()
+
+    except Exception as e:
+        st.error(f"Error checking knowledge schema status: {e}")
+        st.info("You can still view and execute the SQL manually.")
+
+        if st.button("View Knowledge Management SQL"):
+            knowledge_sql = load_knowledge_sql_template()
+            st.code(knowledge_sql, language="sql")
