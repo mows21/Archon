@@ -23,6 +23,8 @@ from streamlit_pages.database import database_tab
 from streamlit_pages.documentation import documentation_tab
 from streamlit_pages.agent_service import agent_service_tab
 from streamlit_pages.mcp import mcp_tab
+from streamlit_pages.projects import projects_page
+from streamlit_pages.tasks import tasks_page
 from streamlit_pages.future_enhancements import future_enhancements_tab
 
 # Load environment variables from .env file
@@ -42,7 +44,7 @@ async def main():
     query_params = st.query_params
     if "tab" in query_params:
         tab_name = query_params["tab"]
-        if tab_name in ["Intro", "Chat", "Environment", "Database", "Documentation", "Agent Service", "MCP", "Future Enhancements"]:
+        if tab_name in ["Intro", "Chat", "Environment", "Database", "Documentation", "Agent Service", "MCP", "Projects", "Tasks", "Future Enhancements"]:
             st.session_state.selected_tab = tab_name
 
     # Add sidebar navigation
@@ -64,6 +66,8 @@ async def main():
         docs_button = st.button("Documentation", use_container_width=True, key="docs_button")
         service_button = st.button("Agent Service", use_container_width=True, key="service_button")
         mcp_button = st.button("MCP", use_container_width=True, key="mcp_button")
+        projects_button = st.button("Projects", use_container_width=True, key="projects_button")
+        tasks_button = st.button("Tasks", use_container_width=True, key="tasks_button")
         future_enhancements_button = st.button("Future Enhancements", use_container_width=True, key="future_enhancements_button")
         
         # Update selected tab based on button clicks
@@ -81,6 +85,10 @@ async def main():
             st.session_state.selected_tab = "Database"
         elif docs_button:
             st.session_state.selected_tab = "Documentation"
+        elif projects_button:
+            st.session_state.selected_tab = "Projects"
+        elif tasks_button:
+            st.session_state.selected_tab = "Tasks"
         elif future_enhancements_button:
             st.session_state.selected_tab = "Future Enhancements"
     
@@ -106,6 +114,10 @@ async def main():
     elif st.session_state.selected_tab == "Documentation":
         st.title("Archon - Documentation")
         documentation_tab(supabase)
+    elif st.session_state.selected_tab == "Projects":
+        projects_page()
+    elif st.session_state.selected_tab == "Tasks":
+        tasks_page()
     elif st.session_state.selected_tab == "Future Enhancements":
         st.title("Archon - Future Enhancements")
         future_enhancements_tab()
