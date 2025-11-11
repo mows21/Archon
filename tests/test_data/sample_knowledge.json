@@ -1,0 +1,50 @@
+[
+  {
+    "url": "https://fastapi.tiangolo.com/tutorial/security/",
+    "chunk_number": 0,
+    "title": "Security - First Steps",
+    "summary": "FastAPI provides several tools to help with security in a straightforward way. It includes utilities for OAuth2, JWT tokens, and more.",
+    "content": "# Security - First Steps\n\nFastAPI provides several tools to help with security in a straightforward way, standardized, and compatible with other tools and standards.\n\n## OAuth2\n\nOAuth2 is a specification that defines several ways to handle authentication and authorization.\n\nIt is quite an extensive specification and covers several complex use cases.\n\nIt includes ways to authenticate using a \"third party\".\n\nThat's what all the systems with \"login with Facebook, Google, Twitter, GitHub\" use underneath.",
+    "tags": ["fastapi", "security", "oauth2", "authentication"],
+    "knowledge_type": "documentation",
+    "framework": "fastapi",
+    "language": "python",
+    "metadata": {
+      "source_type": "documentation",
+      "crawled_at": "2024-01-15T10:00:00Z",
+      "url_path": "/tutorial/security/"
+    }
+  },
+  {
+    "url": "https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/",
+    "chunk_number": 0,
+    "title": "OAuth2 with Password (and hashing), Bearer with JWT tokens",
+    "summary": "Complete example of OAuth2 with Password flow using JWT tokens. Includes password hashing, token generation, and protected routes.",
+    "content": "# OAuth2 with Password (and hashing), Bearer with JWT tokens\n\nNow that we have all the security flow, let's make the application actually secure, using JWT tokens and secure password hashing.\n\n## About JWT\n\nJWT means \"JSON Web Tokens\".\n\nIt's a standard to codify a JSON object in a long dense string without spaces. It looks like this:\n\n```\neyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\n```\n\n",
+    "tags": ["fastapi", "oauth2", "jwt", "password-hashing", "bearer-token"],
+    "knowledge_type": "documentation",
+    "framework": "fastapi",
+    "language": "python",
+    "metadata": {
+      "source_type": "documentation",
+      "crawled_at": "2024-01-15T10:05:00Z",
+      "url_path": "/tutorial/security/oauth2-jwt/"
+    }
+  },
+  {
+    "url": "https://fastapi.tiangolo.com/advanced/security/",
+    "chunk_number": 0,
+    "title": "Advanced Security",
+    "summary": "Advanced security features in FastAPI including custom OAuth2 schemes, additional security headers, and CORS configuration.",
+    "content": "# Advanced Security\n\n## Additional Features\n\nThere are some extra features to handle security apart from the ones covered in the main Tutorial - User Guide: Security.\n\n## OAuth2 scopes\n\nYou can use OAuth2 scopes directly with FastAPI, they are integrated to work seamlessly.\n\nThis would allow you to have a more fine-grained permission system, following the OAuth2 standard, integrated into your OpenAPI application (and the API docs).",
+    "tags": ["fastapi", "security", "oauth2-scopes", "cors", "advanced"],
+    "knowledge_type": "documentation",
+    "framework": "fastapi",
+    "language": "python",
+    "metadata": {
+      "source_type": "documentation",
+      "crawled_at": "2024-01-15T10:10:00Z",
+      "url_path": "/advanced/security/"
+    }
+  }
+]

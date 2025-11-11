@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Tutorial - Getting Started</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/tutorial/first-steps">First Steps</a></li>
+            <li><a href="/tutorial/path-params">Path Parameters</a></li>
+            <li><a href="/tutorial/query-params">Query Parameters</a></li>
+            <li><a href="/tutorial/body">Request Body</a></li>
+            <li><a href="/tutorial/security">Security</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>Getting Started with FastAPI</h1>
+        
+        <p>FastAPI is a modern, fast (high-performance) web framework for building APIs with Python 3.7+ based on standard Python type hints.</p>
+
+        <h2>Key Features</h2>
+        <ul>
+            <li>Fast: Very high performance, on par with NodeJS and Go</li>
+            <li>Fast to code: Increase the speed to develop features by about 200% to 300%</li>
+            <li>Fewer bugs: Reduce about 40% of human (developer) induced errors</li>
+            <li>Intuitive: Great editor support with completion everywhere</li>
+            <li>Easy: Designed to be easy to use and learn</li>
+            <li>Short: Minimize code duplication</li>
+            <li>Robust: Get production-ready code with automatic interactive documentation</li>
+        </ul>
+
+        <h2>Installation</h2>
+        <p>Install FastAPI and Uvicorn:</p>
+        <pre><code class="language-bash">
+pip install fastapi uvicorn[standard]
+        </code></pre>
+
+        <h2>First Example</h2>
+        <p>Create a file <code>main.py</code> with:</p>
+        <pre><code class="language-python">
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"Hello": "World"}
+
+@app.get("/items/{item_id}")
+def read_item(item_id: int, q: str = None):
+    return {"item_id": item_id, "q": q}
+        </code></pre>
+
+        <h2>Run It</h2>
+        <p>Run the server with:</p>
+        <pre><code class="language-bash">
+uvicorn main:app --reload
+        </code></pre>
+
+        <h2>Interactive API docs</h2>
+        <p>Now go to <a href="http://127.0.0.1:8000/docs">http://127.0.0.1:8000/docs</a></p>
+        <p>You will see the automatic interactive API documentation (provided by Swagger UI)</p>
+
+        <h2>Alternative API docs</h2>
+        <p>You can also go to <a href="http://127.0.0.1:8000/redoc">http://127.0.0.1:8000/redoc</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 FastAPI Documentation</p>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+    </footer>
+</body>
+</html>

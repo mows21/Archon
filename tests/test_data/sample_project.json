@@ -1,0 +1,26 @@
+{
+  "name": "FastAPI Authentication System",
+  "description": "Build a complete authentication system using FastAPI with JWT tokens, OAuth2 support, password reset functionality, and user management. The system should be async, scalable, and follow best practices for security.",
+  "status": "planning",
+  "priority": 1,
+  "required_knowledge_tags": [
+    "fastapi",
+    "authentication",
+    "jwt",
+    "oauth2",
+    "security",
+    "async",
+    "password-hashing"
+  ],
+  "required_frameworks": [
+    "fastapi",
+    "pydantic",
+    "sqlalchemy"
+  ],
+  "deadline": null,
+  "metadata": {
+    "estimated_duration_days": 14,
+    "team_size": 2,
+    "complexity": "medium"
+  }
+}

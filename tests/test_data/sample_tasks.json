@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Setup FastAPI Project Structure",
+    "description": "Initialize a new FastAPI project with proper directory structure, virtual environment, and dependencies. Include configuration for development and production environments.",
+    "status": "pending",
+    "priority": 1,
+    "required_knowledge_tags": ["fastapi", "project-structure", "python"],
+    "required_frameworks": ["fastapi"],
+    "estimated_duration_minutes": 120
+  },
+  {
+    "name": "Implement JWT Token Generation",
+    "description": "Create functions to generate and validate JWT tokens with proper expiration, refresh token support, and secure signing. Include error handling and logging.",
+    "status": "pending",
+    "priority": 1,
+    "required_knowledge_tags": ["jwt", "tokens", "security", "authentication"],
+    "required_frameworks": ["fastapi", "pyjwt"],
+    "estimated_duration_minutes": 240
+  },
+  {
+    "name": "Create User Authentication Endpoints",
+    "description": "Build API endpoints for user registration, login, logout, and token refresh. Include proper validation, error handling, and rate limiting.",
+    "status": "pending",
+    "priority": 2,
+    "required_knowledge_tags": ["fastapi", "authentication", "api-design", "endpoints"],
+    "required_frameworks": ["fastapi", "pydantic"],
+    "estimated_duration_minutes": 300
+  },
+  {
+    "name": "Implement OAuth2 Password Flow",
+    "description": "Set up OAuth2 password flow with proper scope handling, token management, and security best practices. Include documentation for the OAuth2 flow.",
+    "status": "pending",
+    "priority": 2,
+    "required_knowledge_tags": ["oauth2", "fastapi", "security"],
+    "required_frameworks": ["fastapi"],
+    "estimated_duration_minutes": 180
+  },
+  {
+    "name": "Add Password Reset Functionality",
+    "description": "Implement password reset workflow with email verification, secure token generation, and expiration handling. Include rate limiting and abuse prevention.",
+    "status": "pending",
+    "priority": 3,
+    "required_knowledge_tags": ["password-reset", "email", "security"],
+    "required_frameworks": ["fastapi"],
+    "estimated_duration_minutes": 240
+  }
+]
